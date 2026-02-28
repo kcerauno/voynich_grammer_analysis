@@ -1,0 +1,5 @@
+tazain	[4:t] [10:a]	remaining='zain'
+v	(none)	remaining='v'
+vo	(none)	remaining='vo'
+vs	(none)	remaining='vs'
+zepchy	(none)	remaining='zepchy'
