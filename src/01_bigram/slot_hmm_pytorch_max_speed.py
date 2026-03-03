@@ -180,7 +180,8 @@ class MaxSpeedHMM_PT:
             log_gamma = log_alpha + log_beta  # (T, N, B, K)
             # 正規化 (T, N, B, 1)
             norm_factor    = torch.logsumexp(log_gamma, dim=3, keepdim=True)
-            log_gamma_norm = log_gamma - norm_factor
+            # PAD位置: log_gamma=-inf, norm_factor=-inf → (-inf)-(-inf)=NaN を防ぐ
+            log_gamma_norm = torch.nan_to_num(log_gamma - norm_factor, nan=-float('inf'))
             # 有効な文字のみ集計するためマスク適用
             log_gamma_norm = log_gamma_norm + torch.log(
                 mask_pt.permute(1, 0).unsqueeze(2).unsqueeze(3)
@@ -204,7 +205,8 @@ class MaxSpeedHMM_PT:
             xi_mask = mask_pt[:, :-1] * mask_pt[:, 1:]  # (N, T-1)
             log_xi  = log_xi + torch.log(xi_mask.permute(1, 0).view(T-1, N, 1, 1, 1))
             # 正規化 (T-1, N, B, K, K) - (T-1, N, B, 1, 1)
-            log_xi  = log_xi - norm_factor[:-1].unsqueeze(4)
+            # PAD位置の norm_factor=-inf による NaN を防ぐ
+            log_xi  = torch.nan_to_num(log_xi - norm_factor[:-1].unsqueeze(4), nan=-float('inf'))
 
             # 更新 1: Start Prob (B, K) - 各系列の t=0
             new_log_start = torch.logsumexp(log_gamma_norm[0], dim=0)  # sum over N -> (B, K)
