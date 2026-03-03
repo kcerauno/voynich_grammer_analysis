@@ -62,7 +62,7 @@ OUT_DIR      = Path("hypothesis/01_bigram/results/hmm_state_analysis")
 MODEL_CACHE.mkdir(parents=True, exist_ok=True)
 OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-K_LIST       = [2, 3, 4, 5]
+K_LIST       = [7, 8]
 N_RESTARTS   = 20
 N_ITER       = 200
 TOL          = 1e-4
