@@ -74,7 +74,7 @@ print(f"  うち 4基:        {sum(1 for _,b in compound if len(b)==4)}")
 print(f"未解析:            {len(failed)}")
 
 # 複合語ファイル
-with open('c:/Users/adept/ag_root/v02_simple_word/compound_words.txt', 'w', encoding='utf-8') as f:
+with open('v02_simple_word/compound_words.txt', 'w', encoding='utf-8') as f:
     f.write(f"# 複合語一覧 ({len(compound)} 語) — 貪欲マッチによる V4 ベース分離\n")
     f.write("# 形式: [N基] 元語  ->  base1 + base2 + ...\n\n")
     for w, bases in compound:
@@ -83,7 +83,7 @@ with open('c:/Users/adept/ag_root/v02_simple_word/compound_words.txt', 'w', enco
 
 # 構成ベース語ファイル (複合語から取り出したベース語のみ、単体語は含まない)
 comp_bases = sorted(set(w[s:e] for w, bases in compound for s, e in bases))
-with open('c:/Users/adept/ag_root/v02_simple_word/compound_bases.txt', 'w', encoding='utf-8') as f:
+with open('v02_simple_word/compound_bases.txt', 'w', encoding='utf-8') as f:
     f.write(f"# 複合語から抽出されたベース語一覧 ({len(comp_bases)} 語)\n\n")
     for b in comp_bases:
         f.write(b + '\n')
